@@ -9,6 +9,7 @@
   ],
   "license": "BSD-3-Clause",
   "main": "build/d3-line-range.js",
+  "module": "index",
   "jsnext:main": "index",
   "homepage": "https://github.com/timaronan/d3-line-range",
   "author": {

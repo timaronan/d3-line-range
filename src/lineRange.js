@@ -23,9 +23,9 @@ export default function() {
 	var maxLength = d3.max(lengths);
 	var all = data.reduce(( acc, cur ) => acc.concat(cur),[]);
 	//data keys for drawing
-	var bottom = 'int1';
-	var middle = 'est';
-	var top = 'int2';
+	var bottom = 0;
+	var middle = 1;
+	var top = 2;
 
 	//range pattern variables
 	var patternStyle = {
