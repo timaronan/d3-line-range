@@ -27,10 +27,8 @@ For example:
 
 ```js
 var data = [[1,2,3],[1,7,9],[2,7,12]]; 
-var lineRange = d3.lineRange()
-					.data(data);
-var parent = d3.select('body')
-            	.call(lineRange);
+var lineRange = d3.lineRange().data(data);
+var parent = d3.select('body').call(lineRange);
 ```
 
 <a name="lineRange_layout" href="#lineRange_layout">#</a> <i>lineRange</i>.<b>layout</b>([<i>{width:width,height:height,margin{top:top,bottom:bottom,left:left,right:right}}</i>])
