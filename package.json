@@ -1,0 +1,48 @@
+{
+  "name": "d3-line-range",
+  "version": "1.0",
+  "description": "d3 v4 line chart with confidence interval",
+  "keywords": [
+    "d3",
+    "d3-module",
+    "line-range"
+  ],
+  "license": "BSD-3-Clause",
+  "main": "build/d3-line-range.js",
+  "jsnext:main": "index",
+  "homepage": "https://github.com/timaronan/d3-line-range",
+  "author": {
+    "name": "timaronan",
+    "url": "https://timaronan.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timaronan/d3-line-range.git"
+  },
+  "scripts": {
+    "pretest": "rm -rf build && mkdir build && rollup -f umd -n d3 -o build/d3-line-range.js -- index.js",
+    "test": "tape 'test/lineRange-test.js'",
+    "prepublish": "npm run test && uglifyjs build/d3-line-range.js -c -m -o build/d3-line-range.min.js",
+    "postpublish": "zip -j build/d3-line-range.zip -- LICENSE README.md build/d3-line-range.js build/d3-line-range.min.js"
+  },
+  "dependencies": {
+    "d3-array": "1",
+    "d3-axis": "1",
+    "d3-scale": "1",
+    "d3-selection": "1",
+    "d3-shape": "1",
+    "d3-transition": "1"
+  },
+  "devDependencies": {
+    "rollup": "0.27",
+    "tape": "4",
+    "uglify-js": "2"
+
+    "eslint": "3",
+    "package-preamble": "^0.1.0",
+    "rollup": "0.41",
+    "rimraf": "^2.6.1",
+    "tape": "4",
+    "uglify-js": "2"
+  }
+}
