@@ -1,7 +1,10 @@
-import 'd3-array';
-import 'd3-axis';
-import 'd3-scale';
-import 'd3-selection';
+import { max as d3Max } from 'd3-array';
+import { axisLeft as d3AxisLeft } from 'd3-axis';
+import { axisLeft as d3AxisBottom } from 'd3-axis';
+import { scaleLinear as d3ScaleLinear } from 'd3-scale';
+import { select as d3Select } from 'd3-selection';
+import { line as d3Line } from 'd3-shape';
+import { area as d3Area } from 'd3-shape';
 import 'd3-transition';
 
 export default function() {
@@ -20,8 +23,8 @@ export default function() {
 	var data = [];
   	var hidden = [];
 	var lengths = data.map(function(a){return a.length;});
-	var maxLength = d3.max(lengths);
-	var all = data.reduce(( acc, cur ) => acc.concat(cur),[]);
+	var maxLength = d3Max(lengths);
+	var all = data.reduce(function( acc, cur ){acc.concat(cur)},[]);
 	//data keys for drawing
 	var bottom = 0;
 	var middle = 1;
@@ -53,7 +56,7 @@ export default function() {
 	function lineRange(selection){
 		selection.each(function () {
 			//parent DOM variables
-			var dom = d3.select(this);
+			var dom = d3Select(this);
 			var svg = dom.append('svg');
 			var shapes = svg.append('g');
 			var pathGroup = shapes.selectAll('g.line-shape').data(data);
@@ -79,19 +82,19 @@ export default function() {
 			  .attr('preserveAspectRatio', 'xMidYMid');
 
 			//axis and scale creation
-			x = d3.scaleLinear()
+			x = d3ScaleLinear()
 			  .range([margin.left, innerWidth]);
-			y = d3.scaleLinear()
+			y = d3ScaleLinear()
 			  .range([innerHeight, margin.top]);
 
 			x.domain([0, maxLength - 1]);
-			y.domain([0, d3.max(all, function(d) { return d[top]; })]);
+			y.domain([0, d3Max(all, function(d) { return d[top]; })]);
 
-			xAxis = d3.axisBottom()
+			xAxis = d3AxisBottom()
 			  .scale(x)
 			  .ticks(maxLength - 1)
 			  .tickFormat(xFormat);
-			yAxis = d3.axisLeft()
+			yAxis = d3AxisLeft()
 			  .scale(y)
 			  .tickFormat(yFormat);
 
@@ -107,11 +110,11 @@ export default function() {
 			//svg shape creation
 			shapes.attr('class', 'shapes');
 
-			line = d3.line()
+			line = d3Line()
 			  .x(function(d,i) { return x(i); })
 			  .y(function(d,i) { return y(d[middle]); });
 
-			area = d3.area()
+			area = d3Area()
 			  .x(function(d,i) { return x(i); })
 			  .y0(function(d) { return y(d[bottom]); })
 			  .y1(function(d) { return y(d[top]);  });
@@ -169,9 +172,9 @@ export default function() {
 			};
 
 			updateKeys = function() {
-				var updateLine = d3.selectAll('.line');
-				var updateArea = d3.selectAll('.area');
-				y.domain([0, d3.max(all, function(d) { return d[top]; })]);
+				var updateLine = svg.selectAll('.line');
+				var updateArea = svg.selectAll('.area');
+				y.domain([0, d3Max(all, function(d) { return d[top]; })]);
 
 				updateLine
 					.transition()
@@ -184,13 +187,13 @@ export default function() {
 			};
 
 			updateHidden = function() {
-				d3.selectAll('.clip-rect')
+				svg.selectAll('.clip-rect')
 					.transition()
 					.duration(duration)
 					.attr('width', width);
 
 				hidden.forEach(function(d){
-					d3.select('#clip'+d)
+					d3Select('#clip'+d)
 						.select('.clip-rect')
 						.transition()
 						.duration(duration)
@@ -199,9 +202,9 @@ export default function() {
 			};
 
 			updateLayout = function() {
-				var updateLine = d3.selectAll('.line');
-				var updateArea = d3.selectAll('.area');
-				var updateClip = d3.selectAll('.clip-rect');
+				var updateLine = svg.selectAll('.line');
+				var updateArea = svg.selectAll('.area');
+				var updateClip = svg.selectAll('.clip-rect');
 
 				svg.transition()
 					.duration(duration).attr('viewBox', '0 0 '+width+' '+height);
@@ -210,7 +213,7 @@ export default function() {
 				x.range([margin.left, innerWidth])
 				 	.domain([0,maxLength - 1]);
 				y.range([innerHeight, margin.top])
-				 	.domain([0, d3.max(all, function(d) { return d[top]; })]);
+				 	.domain([0, d3Max(all, function(d) { return d[top]; })]);
 
 				xAxis.scale(x);
 				yAxis.scale(y);
@@ -244,7 +247,7 @@ export default function() {
 
 			updateData = function() {
 				x.domain([0,maxLength - 1]);
-				y.domain([0, d3.max(all, function(d) { return d[top]; })]);
+				y.domain([0, d3Max(all, function(d) { return d[top]; })]);
 
 				xAxis.scale(x);
 				yAxis.scale(y);
@@ -373,8 +376,8 @@ export default function() {
 		if (!arguments.length) return data;
 		data = value;
 		lengths = data.map(function(a){return a.length;});
-		maxLength = d3.max(lengths);
-		all = data.reduce(( acc, cur ) => acc.concat(cur),[]);
+		maxLength = d3Max(lengths);
+		all = data.reduce(function( acc, cur ){acc.concat(cur)},[]);
 		if (typeof updateData === 'function') updateData();
 		return lineRange;
 	};

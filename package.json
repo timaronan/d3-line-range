@@ -1,6 +1,6 @@
 {
   "name": "d3-line-range",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "d3 v4 line chart with confidence interval",
   "keywords": [
     "d3",
@@ -35,14 +35,7 @@
     "d3-transition": "1"
   },
   "devDependencies": {
-    "rollup": "0.27",
-    "tape": "4",
-    "uglify-js": "2"
-
-    "eslint": "3",
-    "package-preamble": "^0.1.0",
     "rollup": "0.41",
-    "rimraf": "^2.6.1",
     "tape": "4",
     "uglify-js": "2"
   }
