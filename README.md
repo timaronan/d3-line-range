@@ -1,6 +1,6 @@
 # d3-line-range v4
 
-d3 v4 port of http://timaronan.com/lines/
+d3 v4 port of an interactive line chart with a confidence interval
 
 ## Installing
 
