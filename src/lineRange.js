@@ -52,6 +52,7 @@ export default function() {
 	var updateHidden = null;
 	var updateLayout = null;
 	var updateData = null;
+	var updateKeys = null;
 
 	function lineRange(selection){
 		selection.each(function () {
