@@ -377,7 +377,7 @@ export default function() {
 		data = value;
 		lengths = data.map(function(a){return a.length;});
 		maxLength = d3Max(lengths);
-		all = data.reduce(function( acc, cur ){acc.concat(cur)},[]);
+		all = data.reduce(function( acc, cur ){return acc.concat(cur)},[]);
 		if (typeof updateData === 'function') updateData();
 		return lineRange;
 	};
